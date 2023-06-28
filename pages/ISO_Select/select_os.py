@@ -50,7 +50,6 @@ class OsInfoBox(QGroupBox):
 		layout.addWidget(osInfo)
 		#self.OsImagPixDir = "/"
 
-
 # Components
 #* QLineEdit, with a QLabel, inside a QWidget. Basically.
 class LabeledEdit(QWidget):
