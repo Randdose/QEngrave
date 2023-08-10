@@ -1,24 +1,25 @@
 # PySide widgets
-from PySide2.QtWidgets import QMainWindow, QWidget, QStackedWidget, QStackedLayout
+from PySide2.QtWidgets import QMainWindow, QWidget, QHBoxLayout
 
-# Get pages for the page stack
-from pages.ISO_Select.iso_select_page import IsoSelectPage
-# from pages.select_drive import SelectDrive
-# from pages.flash_info import FlashInfo
+# Get sections
+from sections.Drive_Info import SelectDrive
+from sections.ISO_Select import IsoSelect
 
 # Main application window
 class MainWindow(QMainWindow):
 	def __init__(self):
 		super().__init__()
 
-		pageStack = QWidget()
-		stackedLayout = QStackedLayout()
-		pageStack.setLayout(stackedLayout)
+		self.setWindowTitle("QEngrave")
 
-		self.setWindowTitle("KFlasher")
+		root = QWidget()
+		rootLayout = QHBoxLayout()
+		root.setLayout(rootLayout)
 
-		isoSelectPage = IsoSelectPage()
+		selectDrive = SelectDrive()
+		selectISO = IsoSelect()
 
-		self.setCentralWidget(pageStack)
+		rootLayout.addWidget(selectDrive)
+		rootLayout.addWidget(selectISO)
 
-		stackedLayout.addWidget(isoSelectPage)
+		self.setCentralWidget(root)
