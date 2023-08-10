@@ -1,4 +1,5 @@
 import subprocess
+from blkinfo import BlkDiskInfo
 
 # Returns the output of a given Bash command
 def commandOutput(command, priv=0):
@@ -12,7 +13,6 @@ def runCommand(command, priv=0, BG=0):
 
 	if(priv==1):
 		command = f"pkexec {command}"
-
 	if(BG==1):
 		subprocess.Popen(command, shell=True)
 	else:
@@ -24,3 +24,10 @@ def pkgIsInstalled(pkgName):
 		return not(commandOutput(f"which {pkgName}") == f"{pkgName} not found")
 	except:
 		return False
+
+def getDrives(showAll=False):
+	filters = {} if showAll else {"rm": True, "hotplug": True}
+
+	blkd = BlkDiskInfo()
+
+	return blkd.get_disks(filters)
