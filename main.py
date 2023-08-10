@@ -7,7 +7,6 @@ from PySide2.QtWidgets import (
 from PySide2.QtGui import QIcon
 
 # PySide Components
-# from pages.select_iso import IsoSelect
 from main_window import MainWindow
 
 # System commands and tools
