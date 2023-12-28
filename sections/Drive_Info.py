@@ -2,9 +2,9 @@ import PySide2
 from PySide2.QtCore import Qt, QProcess, QFileSelector
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import (
-		QWidget, QLabel, QPushButton, QCheckBox, QGroupBox, QVBoxLayout,
-		QHBoxLayout, QComboBox
-	)
+	QWidget, QLabel, QPushButton, QCheckBox, QGroupBox, QVBoxLayout,
+	QHBoxLayout, QComboBox
+)
 
 from tools.SysTools import getDrives
 
@@ -59,14 +59,13 @@ class SelectDrive(QGroupBox):
 				"removable": drive["rm"]
 			}
 			self.deviceCBox.addItem(f"{drive['label']} ({drive['name']})", info)
-			#print(drive)
 
 		self.refreshInfo()
 
 	def refreshInfo(self):
 		print(">>> ", self.currDriveInfoLayout.count())
 
-		def clearLayout():
+		def clearInfoBox():
 			if self.currDriveInfoLayout is not None:
 				while self.currDriveInfoLayout.count():
 					item = self.currDriveInfoLayout.takeAt(0)
@@ -75,7 +74,7 @@ class SelectDrive(QGroupBox):
 						widget.deleteLater()
 					else:
 						self.clearLayout(item.layout())
-		clearLayout()
+		clearInfoBox()
 
 		oldInfo = self.deviceCBox.currentData()
 
@@ -83,9 +82,9 @@ class SelectDrive(QGroupBox):
 			info = {
 				"Name": oldInfo["name"],
 				"Location": oldInfo["location"],
-				"Size": oldInfo["size"],
+				"Size": f"{round(int(oldInfo['size']) / 1073742000, 2)} GiB" if int(oldInfo['size']) > 1073742000 else f"{round(int(oldInfo['size']) / 1048576, 2)} MiB",
 				"Vendor": oldInfo["vendor"],
-				"Removable": oldInfo["removable"]
+				"Removable": "Yes" if oldInfo["removable"] == "1" else "No"
 			}
 
 			for key in info.keys():
